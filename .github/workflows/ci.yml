@@ -1,20 +1,20 @@
-name: CI # the name shown in the Actions tab
+name: CI
 
-on: [push] # TRIGGER: run on every push, automatically
+on: [push]
 
 jobs:
   test:
-    runs-on: ubuntu-latest # GitHub creates a fresh Linux machine
+    runs-on: ubuntu-24.04
 
-    steps: # steps run in order; first failure stops the run
-      - uses: actions/checkout@v4 # step 1: copy the repo onto it
-
-      - uses: actions/setup-python@v5 # step 2: install Python
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
         with:
           python-version: '3.12'
 
-      - run: pip install pytest # step 3: install the test tool
+      - name: Install pytest
+        run: python -m pip install pytest
 
-      - run: pytest # step 4: THE GATE - run the tests.
-        # one failing test fails this step,
-        # which turns the whole run red.
+      - name: Run pytest
+        run: python -m pytest -v
+
